@@ -7,8 +7,8 @@
 #
 ################################################################################
 # \copyright
-# Copyright 2024-2025, Cypress Semiconductor Corporation (an Infineon company)
-# SPDX-License-Identifier: Apache-2.0
+# (c) 2024-2026, Infineon Technologies AG, or an affiliate of Infineon
+# Technologies AG.  SPDX-License-Identifier: Apache-2.0
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -58,7 +58,8 @@ COMPONENTS+=FREERTOS WICED_DUALMODE a2dp_sink_profile SBC_CODEC a2dp_common
 COMPONENTS+=avrc_target profiles_include avrc_controller
 
 # Like COMPONENTS, but disable optional code that was enabled by default.
-DISABLE_COMPONENTS=
+DISABLE_COMPONENTS+=MW_IFX_MCUBOOT_PSE84
+DISABLE_COMPONENTS+= MW_WOLFSSL
 
 CORE=CM33
 CORE_NAME=CM33_0
@@ -85,8 +86,12 @@ DEFINES+=TLV320DAC3100_PROCESSING_BLOCK=0x0B
 # Add additional defines to the build process (without a leading -D).
 DEFINES+=CY_RETARGET_IO_CONVERT_LF_TO_CRLF
 
-# Select softfp or hardfp floating point. Default is softfp.
+# Select softfp or hardfp floating point. LLVM SBC libraries require hardfp.
+ifeq ($(TOOLCHAIN),LLVM_ARM)
+VFP_SELECT=hardfp
+else
 VFP_SELECT+= 
+endif
 
 CY_IGNORE += $(SEARCH_audio-voice-core)/lib/SP_ENH
 
@@ -123,6 +128,9 @@ PREBUILD=
 # Custom post-build commands to run.
 POSTBUILD=
 
+#Ignore MCUboot files, they are not needed for this project.
+MCUBOOT_ROOT = $(SEARCH_ifx-mcuboot-pse84)
+CY_IGNORE += $(MCUBOOT_ROOT)
 ################################################################################
 # Paths
 ################################################################################

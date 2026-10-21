@@ -5,20 +5,20 @@ The code example acts as an A2DP Sink (rendering device for the audio being stre
 
 This code example has a three-project structure: CM33S secure, CM33 non-secure, and CM55 projects. The CM33 secure project is programmed and executed from RRAM. The CM33 non-secure and CM55 projects are programmed to the external QSPI flash and executed from SRAM. Extended Boot launches the CM33 secure project from a fixed location in the RRAM, which then configures the protection settings and launches the CM33 non-secure application. Additionally, the CM33 non-secure application enables CM55 CPU and launches the CM55 application.
 
-This code examples requires you to use the **PSOC&trade; EdgeProtect Bootloader** code example as the first application to get started. By default, Edge Protect Bootloader is stored and booted from RRAM. Extended Boot launches the Edge Protect Bootloader on RRAM from a predefined address. Edge Protect Bootloader launches the next user application (PSOC&trade; Edge MCU: Bluetooth&reg; A2DP Sink). In this code example, the Edge Protect Bootloader needs to be configured to load the user application to SRAM and Launch it from SRAM.   
+This code examples requires you to use the **PSOC&trade; EdgeProtect Bootloader** code example as the first application to get started. By default, Edge Protect Bootloader is stored and booted from RRAM. Extended Boot launches the Edge Protect Bootloader on RRAM from a predefined address. Edge Protect Bootloader launches the next user application (PSOC&trade; Edge MCU: Bluetooth&reg; A2DP Sink). In this code example, the Edge Protect Bootloader needs to be configured to load the user application to SRAM and Launch it from SRAM.
 
 The Edge Protect Bootloader is stored in RRAM. User application (proj_cm33_s, proj_cm33_ns and proj_cm55) is stored in the external flash. Edge Protect Bootloader loads proj_cm33_s, proj_cm33_ns and proj_cm55 from the external flash to a known location in SRAM and launches the application.
 
 [View this README on GitHub.](https://github.com/Infineon/mtb-example-psoc-edge-btstack-a2dp-sink)
 
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyNDAwNTQiLCJTcGVjIE51bWJlciI6IjAwMi00MDA1NCIsIkRvYyBUaXRsZSI6IlBTT0MmdHJhZGU7IEVkZ2UgTUNVOiBCbHVldG9vdGgmcmVnOyBBMkRQIFNpbmsgd2l0aCBBVlJDUCIsInJpZCI6InJhbWFrcmlzaG5hcCIsIkRvYyB2ZXJzaW9uIjoiMi4wLjAiLCJEb2MgTGFuZ3VhZ2UiOiJFbmdsaXNoIiwiRG9jIERpdmlzaW9uIjoiTUNEIiwiRG9jIEJVIjoiSUNXIiwiRG9jIEZhbWlseSI6IlBTT0MifQ==)
+[Provide feedback on this code example.](https://yourvoice.infineon.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyNDAwNTQiLCJTcGVjIE51bWJlciI6IjAwMi00MDA1NCIsIkRvYyBUaXRsZSI6IlBTT0MmdHJhZGU7IEVkZ2UgTUNVOiBCbHVldG9vdGgmcmVnOyBBMkRQIFNpbmsgd2l0aCBBVlJDUCIsInJpZCI6ImFydmluZGt1bWFyLnN1cmVzaGt1bWFyQGluZmluZW9uLmNvbSIsIkRvYyB2ZXJzaW9uIjoiMi4xLjAiLCJEb2MgTGFuZ3VhZ2UiOiJFbmdsaXNoIiwiRG9jIERpdmlzaW9uIjoiTUNEIiwiRG9jIEJVIjoiSUNXIiwiRG9jIEZhbWlseSI6IlBTT0MifQ==)
 
 See the [Design and implementation](docs/design_and_implementation.md) for the functional description of this code example.
 
 
 ## Requirements
 
-- [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) v3.6 or later (tested with v3.6)
+- [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) v3.7 or later (tested with v3.9)
 - Board support package (BSP) minimum required version: 1.0.0
 - Programming language: C
 - Associated parts: All [PSOC&trade; Edge MCU](https://www.infineon.com/products/microcontroller/32-bit-psoc-arm-cortex/32-bit-psoc-edge-arm) parts
@@ -27,8 +27,8 @@ See the [Design and implementation](docs/design_and_implementation.md) for the f
 
 - GNU Arm&reg; Embedded Compiler v14.2.1 (`GCC_ARM`) – Default value of `TOOLCHAIN`
 - Arm&reg; Compiler v6.22 (`ARM`)
-- IAR C/C++ Compiler v9.50.2 (`IAR`)
-- LLVM Embedded Toolchain for Arm&reg; v19.1.5 (`LLVM_ARM`)
+- IAR C/C++ Compiler v9.70.4 (`IAR`)
+- Arm&reg; Toolchain for Embedded v22.1 (`LLVM_ARM`)
 
 ## Supported kits (make variable 'TARGET')
 
@@ -59,7 +59,7 @@ See [Using the code example](docs/using_the_code_example.md) for instructions on
 
 1. Copy the **proj_bootloader** from **PSOC_Edge_Protect_Bootloader** to root of the A2DP Sink application that you intend to integrate the bootloader, where other projects (CM33, CM33 secure and CM55) are placed
 
-2. In IDE, select the **PSOC_Edge_Protect_Bootloader** Project and delete it  
+2. In IDE, select the **PSOC_Edge_Protect_Bootloader** Project and delete it
 
 3. Import the bootloader project in your A2DP Sink application, select the proj_bootloader and click on **Import as Project** option. Wait for the process to complete.
 
@@ -67,18 +67,18 @@ See [Using the code example](docs/using_the_code_example.md) for instructions on
 
 ```
 MTB_PROJECTS=proj_cm33_s proj_cm33_ns proj_cm55 proj_bootloader
-```	
+```
 
-> **Note** : Current version of bootloader does not support LLVM_ARM compiler. If your building A2DP Sink application for LLVM. 
+> **Note** : Current version of bootloader does not support LLVM_ARM compiler. If your building A2DP Sink application for LLVM.
             Open the Makefile in the‘proj_bootloader’, set TOOLCHAIN variable to GCC_ARM or ARM or IAR as shown below
-			 
+
 ```
 TOOLCHAIN=GCC_ARM
 ```
 
 5. Use library manger or make getlibs to update the libraries
 
-6. Open the common.mk in the root of the application and remove **#** in front of COMBINE_SIGN_JSON or replace it with the following: 
+6. Open the common.mk in the root of the application and remove **#** in front of COMBINE_SIGN_JSON or replace it with the following:
 
 ```
 COMBINE_SIGN_JSON=bsps/TARGET_$(TARGET)/config/GeneratedSource/boot_with_bldr.json
@@ -95,7 +95,7 @@ COMBINE_SIGN_JSON=bsps/TARGET_$(TARGET)/config/GeneratedSource/boot_with_bldr.js
 	**Figure 1** shows the output when,
 
 	- The kit is programmed for the first time, where the Identity keys need to be generated newly and is not available in the NVM
-	
+
 		or
 
 	- The device has been paired before and the identity keys (bonding information) were cleared by pressing user button (SW2) and the reset button (XRES) together
@@ -103,9 +103,9 @@ COMBINE_SIGN_JSON=bsps/TARGET_$(TARGET)/config/GeneratedSource/boot_with_bldr.js
 	**Figure 1. Log messages on KitProg3 COM port (device not paired)**
 
     ![](images/application_start.png)
-	
+
 	**Figure 2** shows the output when the kit is programmed, where the device was paired before and the identity keys are available in the database.
-	
+
 	**Figure 2. Log messages on KitProg3 COM port (device paired)**
 
     ![](images/start.png)
@@ -113,13 +113,13 @@ COMBINE_SIGN_JSON=bsps/TARGET_$(TARGET)/config/GeneratedSource/boot_with_bldr.js
 11. On the A2DP Source side (on mobile), do the following:
 
 	a. Open **Bluetooth** from **Settings**, and click **Scan**
-	
+
 	b. Pair with “**IFX_A2DP_Sink**” <br>(A2DP Sink app on the board appears with this name when discovered). Observe that the blue LED lights up on the board when bluetooth connected
-	
+
 	c. Open a music streaming app and start streaming audio and observe that the green LED lights up on the board
-	
+
 	d. Pause and resume when required
-	
+
 12. When you start streaming audio, the music is played on the onboard speaker
 
 13. When you pause/resume the music on the phone's application, the audio stops and resumes at the sink side, respectively
@@ -134,8 +134,8 @@ COMBINE_SIGN_JSON=bsps/TARGET_$(TARGET)/config/GeneratedSource/boot_with_bldr.js
     | USER BTN1(SW2)| short press          | Volume Up           |
     | USER BTN2(SW4)| short press          | Volume Down         |
 
-    > **Note:** 
-	1. The "long press" is defined as holding the button for more than 2 seconds  
+    > **Note:**
+	1. The "long press" is defined as holding the button for more than 2 seconds
     2. The "very long press" is defined as holding the button for more than 10 seconds
 	3. Phone with AVRCP v1.4 and above will only support Absolute Volume. In below versions volume changes locally on the kit and doesn't get notified to phone
 
@@ -168,6 +168,7 @@ Document title: *CE240054* - *PSOC&trade; Edge MCU: Bluetooth&reg; A2DP Sink*
  ------- | ---------------------
  1.x.0   | New code example <br> Early access release
  2.0.0   | GitHub release
+ 2.1.0   | Updated Makefile to improve functionality
 <br>
 
 
